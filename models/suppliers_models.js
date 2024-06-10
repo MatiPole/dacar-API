@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const usersSchema = new mongoose.Schema({
+const suppliersSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -8,23 +8,35 @@ const usersSchema = new mongoose.Schema({
   lastname: {
     type: String,
     required: true,
+    unique: true,
   },
-  username: {
+  phone: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  dni: {
+    type: String,
+    required: true,
+  },
+  dni: {
+    type: String,
+    required: true,
+  },
+  cuil_cuit: {
     type: String,
     required: true,
   },
   email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  role: {
     type: Number,
     required: false,
+  },
+  tag: {
+    type: String,
+    required: true,
   },
   status: {
     type: Boolean,
@@ -32,4 +44,4 @@ const usersSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("Users", usersSchema);
+export default mongoose.model("Suppliers", suppliersSchema);
