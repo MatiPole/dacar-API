@@ -1,6 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import MainTable from "./routes/main_table.js";
+import Modules from "./routes/modules.js";
+import Pieces from "./routes/pieces.js";
 import cors from "cors";
 import "dotenv/config";
 
@@ -23,6 +25,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/main-table", MainTable);
+app.use("/modules", Modules);
+app.use("/pieces", Pieces);
 app.get("/", function (req, res) {
   res.send("API CORRIENDO");
 });

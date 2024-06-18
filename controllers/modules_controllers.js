@@ -2,7 +2,7 @@ import Modules from "../models/modules_models.js";
 
 //Se buscan todas las bandas con status true.
 async function moduleList() {
-  let Module = await Modules.find({ status: true });
+  let Module = await Modules.find();
   return Module;
 }
 
@@ -15,7 +15,7 @@ async function createModule(req) {
     pieces_number: req.body.pieces_number,
   });
 
-  return await Modules.save();
+  return await Module.save();
 }
 
 async function updateModule(req, id) {

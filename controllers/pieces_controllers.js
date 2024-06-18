@@ -2,18 +2,20 @@ import Pieces from "../models/pieces_models.js";
 
 //Se buscan todas las bandas con status true.
 async function piecesList() {
-  let piece = await Pieces.find({ status: true });
+  let piece = await Pieces.find();
   return piece;
 }
 
 async function createPiece(req) {
-  let piece = new Piece({
+  console.log(req.body);
+  let piece = new Pieces({
     name: req.body.name,
     length: req.body.length,
     width: req.body.width,
     category: req.body.category,
     material: req.body.material,
     edge: req.body.edge,
+    module_id: req.body.moduleId,
   });
 
   return await piece.save();

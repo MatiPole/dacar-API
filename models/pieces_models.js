@@ -22,7 +22,11 @@ const piecesSchema = new mongoose.Schema({
     required: true,
   },
   edge: {
-    type: number,
+    type: Number,
+    required: true,
+  },
+  module_id: {
+    type: String,
     required: true,
   },
 });

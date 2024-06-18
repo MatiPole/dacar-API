@@ -20,7 +20,7 @@ const modulesSchema = new mongoose.Schema({
     required: true,
   },
   pieces_number: {
-    type: number,
+    type: Number,
     required: true,
   },
 });
