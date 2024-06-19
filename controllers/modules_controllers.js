@@ -56,4 +56,13 @@ async function findByName(name) {
   return Module;
 }
 
-export { moduleList, createModule, updateModule, deleteModule, findByName };
+async function findById(id) {
+  try {
+    const module = await Modules.findById(id);
+    return module;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export { moduleList, createModule, updateModule, deleteModule, findByName, findById };

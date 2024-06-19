@@ -6,6 +6,7 @@ import {
   updateModule,
   deleteModule,
   findByName,
+  findById,
 } from "../controllers/modules_controllers.js";
 
 const route = express.Router();
@@ -52,6 +53,18 @@ route.delete("/:id", verifyToken, (req, res) => {
 //Buscar por nombre los modulos
 route.get("/find-by-name/:name", (req, res) => {
   let result = findByName(req.params.name);
+  result
+    .then((value) => {
+      res.json(value);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
+
+//Buscar por ID los modulos
+route.get("/find-by-id/:id", (req, res) => {
+  let result = findById(req.params.id);
   result
     .then((value) => {
       res.json(value);
