@@ -15,10 +15,8 @@ const route = express.Router();
 route.get("/", (req, res) => {
   let result = piecesList();
   result
-    .then((module) => {
-      res.json({
-        module,
-      });
+    .then((piece) => {
+      res.json(piece);
     })
     .catch((err) => {
       res.status(400).json({ err });
