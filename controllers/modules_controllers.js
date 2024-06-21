@@ -1,8 +1,8 @@
 import Modules from "../models/modules_models.js";
 
-//Se buscan todas las bandas con status true.
+//Se traen todos los modulos
 async function moduleList() {
-  let Module = await Modules.find();
+  let Module = await Modules.find().sort({ name: 1 });
   return Module;
 }
 
@@ -65,4 +65,11 @@ async function findById(id) {
   }
 }
 
-export { moduleList, createModule, updateModule, deleteModule, findByName, findById };
+export {
+  moduleList,
+  createModule,
+  updateModule,
+  deleteModule,
+  findByName,
+  findById,
+};

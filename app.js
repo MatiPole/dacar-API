@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import Furnitures from "./routes/furnitures.js";
 import MainTable from "./routes/main_table.js";
 import Modules from "./routes/modules.js";
 import Pieces from "./routes/pieces.js";
@@ -24,6 +25,7 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/furnitures", Furnitures);
 app.use("/main-table", MainTable);
 app.use("/modules", Modules);
 app.use("/pieces", Pieces);

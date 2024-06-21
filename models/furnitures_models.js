@@ -13,17 +13,18 @@ const furnituresSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  height: {
+    type: String,
+    required: true,
+  },
   category: {
     type: String,
     required: true,
   },
-  modules_id: {
-    type: String,
+  modules_furniture: {
+    type: Array,
     required: true,
-  },
-  modules_number: {
-    type: number,
-    required: true,
+    ref: "Modules",
   },
 });
 

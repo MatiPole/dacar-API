@@ -1,42 +1,42 @@
 import express from "express";
 import verifyToken from "../middlewares/auth.js";
 import {
-  moduleList,
-  createModule,
-  updateModule,
-  deleteModule,
+  furnitureList,
+  createFurniture,
+  updateFurniture,
+  deleteFurniture,
   findByName,
   findById,
-} from "../controllers/modules_controllers.js";
+} from "../controllers/furniture_controllers.js";
 
 const route = express.Router();
 
 //En todas las rutas aplicamos autenticación por medio de nuestro middleware verifyToken
 //Búsqueda  para adminsitrador
 route.get("/", (req, res) => {
-  let result = moduleList();
+  let result = furnitureList();
   result
-    .then((module) => {
-      res.json(module);
+    .then((furniture) => {
+      res.json(furniture);
     })
     .catch((err) => {
       res.status(400).json({ err });
     });
 });
 
-//Crear module
+//Crear furniture
 route.post("/", async (req, res) => {
   try {
-    const module = await createModule(req);
-    res.json(module);
+    const furniture = await createFurniture(req);
+    res.json(furniture);
   } catch (err) {
-    res.status(400).json({ error: err.message || "Error al crear modulo" });
+    res.status(400).json({ error: err.message || "Error al crear mueble" });
   }
 });
 
-//Eliminar un modulo
+//Eliminar un furniture
 route.delete("/:id", verifyToken, (req, res) => {
-  let result = deleteModule(req.params.id);
+  let result = deleteFurniture(req.params.id);
   result
     .then((value) => {
       res.json({
@@ -48,7 +48,7 @@ route.delete("/:id", verifyToken, (req, res) => {
     });
 });
 
-//Buscar por nombre los modulos
+//Buscar por nombre los furniture
 route.get("/find-by-name/:name", (req, res) => {
   let result = findByName(req.params.name);
   result
@@ -74,7 +74,7 @@ route.get("/find-by-id/:id", (req, res) => {
 
 //Paginado ejemplo: localhost:3000/events/limit-events?page=1&limit=2
 route.get("/limit-modules", (req, res) => {
-  let result = limitModules(req.query.page, req.query.limit);
+  let result = limitFurnitures(req.query.page, req.query.limit);
   result
     .then((value) => {
       res.json(value);
@@ -84,8 +84,8 @@ route.get("/limit-modules", (req, res) => {
     });
 });
 
-route.patch("/:moduleId", (req, res) => {
-  let result = updateModule(req.params.eventId);
+route.patch("/:furnitureId", (req, res) => {
+  let result = updateFurniture(req.params.eventId);
   result
     .then((numberOfTicketsModified) => {
       res.json({ success: true, numberOfTicketsModified });
