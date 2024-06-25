@@ -5,35 +5,15 @@ const suppliersSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  lastname: {
+  material: {
     type: String,
     required: true,
   },
-  phone: {
+  category: {
     type: String,
     required: true,
   },
-  address: {
-    type: String,
-    required: true,
-  },
-  dni: {
-    type: String,
-    required: true,
-  },
-  dni: {
-    type: String,
-    required: true,
-  },
-  cuil_cuit: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: Number,
-    required: false,
-  },
-  tag: {
+  price: {
     type: String,
     required: true,
   },

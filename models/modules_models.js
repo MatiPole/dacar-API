@@ -15,6 +15,10 @@ const modulesSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  height: {
+    type: Number,
+    required: true,
+  },
   category: {
     type: String,
     required: true,
@@ -22,6 +26,11 @@ const modulesSchema = new mongoose.Schema({
   pieces_number: {
     type: Number,
     required: true,
+  },
+
+  supplies_module: {
+    type: Object,
+    required: false,
   },
 });
 

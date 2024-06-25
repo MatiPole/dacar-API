@@ -1,20 +1,22 @@
 import Pieces from "../models/pieces_models.js";
 
-//Se buscan todas las bandas con status true.
+//Se buscan todas las piezas.
 async function piecesList() {
   let piece = await Pieces.find();
   return piece;
 }
 
 async function createPiece(req) {
-  console.log(req.body);
   let piece = new Pieces({
     name: req.body.name,
     length: req.body.length,
     width: req.body.width,
     category: req.body.category,
     material: req.body.material,
+    orientation: req.body.orientation,
     edge: req.body.edge,
+    finishing: req.body.finishing,
+    pantographed: req.body.pantographed,
     module_id: req.body.moduleId,
   });
 

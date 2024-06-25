@@ -21,8 +21,20 @@ const piecesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  orientation: {
+    type: String,
+    required: true,
+  },
   edge: {
-    type: Number,
+    type: Object,
+    required: false,
+  },
+  finishing: {
+    type: Object,
+    required: false,
+  },
+  pantographed: {
+    type: String,
     required: true,
   },
   module_id: {

@@ -1,6 +1,6 @@
 import MainTable from "../models/main_table_models.js";
 
-//Se buscan todas las bandas con status true.
+//Se buscan todas las tablas.
 async function mainTableList() {
   let table = await MainTable.find();
   return table;

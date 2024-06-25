@@ -1,21 +1,24 @@
 import mongoose from "mongoose";
 
-const mainTableSchema = new mongoose.Schema({
+const suppliesSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
   length: {
     type: Number,
-    required: true,
+    required: false,
+    default: 0,
   },
   width: {
     type: Number,
-    required: true,
+    required: false,
+    default: 0,
   },
   thickness: {
     type: Number,
-    required: true,
+    required: false,
+    default: 0,
   },
   category: {
     type: String,
@@ -29,6 +32,14 @@ const mainTableSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  supplier_id: {
+    type: Number,
+    required: false,
+  },
+  status: {
+    type: Boolean,
+    default: true,
+  },
 });
 
-export default mongoose.model("MainTable", mainTableSchema);
+export default mongoose.model("Supplies", suppliesSchema);

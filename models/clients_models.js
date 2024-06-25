@@ -8,7 +8,6 @@ const clientsSchema = new mongoose.Schema({
   lastname: {
     type: String,
     required: true,
-    unique: true,
   },
   phone: {
     type: String,

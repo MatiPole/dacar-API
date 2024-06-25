@@ -4,6 +4,7 @@ import Furnitures from "./routes/furnitures.js";
 import MainTable from "./routes/main_table.js";
 import Modules from "./routes/modules.js";
 import Pieces from "./routes/pieces.js";
+import Supplies from "./routes/supplies.js";
 import cors from "cors";
 import "dotenv/config";
 
@@ -29,6 +30,7 @@ app.use("/furnitures", Furnitures);
 app.use("/main-table", MainTable);
 app.use("/modules", Modules);
 app.use("/pieces", Pieces);
+app.use("/supplies", Supplies);
 app.get("/", function (req, res) {
   res.send("API CORRIENDO");
 });

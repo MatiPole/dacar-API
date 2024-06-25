@@ -7,12 +7,15 @@ async function moduleList() {
 }
 
 async function createModule(req) {
+  // console.log(req.body);
   let Module = new Modules({
     name: req.body.name,
     length: req.body.length,
     width: req.body.width,
+    height: req.body.height,
     category: req.body.category,
     pieces_number: req.body.pieces_number,
+    supplies_module: req.body.supplies_module,
   });
 
   return await Module.save();
