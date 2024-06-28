@@ -22,9 +22,8 @@ const furnituresSchema = new mongoose.Schema({
     required: true,
   },
   modules_furniture: {
-    type: Array,
+    type: Object,
     required: true,
-    ref: "Modules",
   },
 });
 
