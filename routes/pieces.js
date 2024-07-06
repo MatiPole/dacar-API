@@ -5,6 +5,7 @@ import {
   createPiece,
   updatePiece,
   deletePiece,
+  findByModuleId,
   findByName,
 } from "../controllers/pieces_controllers.js";
 
@@ -50,6 +51,18 @@ route.delete("/:id", verifyToken, (req, res) => {
 //Buscar por nombre los piezas
 route.get("/find-by-name/:name", (req, res) => {
   let result = findByName(req.params.name);
+  result
+    .then((value) => {
+      res.json(value);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
+
+//Buscar piezas por moduleId
+route.get("/find-by-moduleId/:moduleId", (req, res) => {
+  let result = findByModuleId(req.params.moduleId);
   result
     .then((value) => {
       res.json(value);

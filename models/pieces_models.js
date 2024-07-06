@@ -29,13 +29,38 @@ const piecesSchema = new mongoose.Schema({
     type: Object,
     required: false,
   },
-  finishing: {
-    type: Object,
+  lacqueredPiece: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  lacqueredPieceSides: {
+    type: String,
     required: false,
   },
-  pantographed: {
+  veneer: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  veneerFinishing: {
     type: String,
-    required: true,
+    required: false,
+  },
+  melamine: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  melamineLacquered: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  pantographed: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
   module_id: {
     type: String,

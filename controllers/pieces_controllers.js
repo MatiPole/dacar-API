@@ -15,8 +15,14 @@ async function createPiece(req) {
     material: req.body.material,
     orientation: req.body.orientation,
     edge: req.body.edge,
-    finishing: req.body.finishing,
+    lacqueredPiece: req.body.lacqueredPiece,
+    lacqueredPieceSides: req.body.lacqueredPieceSides,
+    veneer: req.body.veneer,
+    veneerFinishing: req.body.veneerFinishing,
+    melamine: req.body.melamine,
+    melamineLacquered: req.body.melamineLacquered,
     pantographed: req.body.pantographed,
+    edge: req.body.edge,
     module_id: req.body.moduleId,
   });
 
@@ -53,7 +59,14 @@ async function deletePiece(id) {
     res.status(400).send(err + "Error al eliminar la pieza");
   }
 }
-
+async function findByModuleId(moduleId) {
+  try {
+    const pieces = await Pieces.find({ module_id: moduleId }).exec();
+    return pieces;
+  } catch (err) {
+    throw err;
+  }
+}
 async function findByName(name) {
   let nameInsensitive = "(?i)" + name;
   let piece = await Pieces.find({
@@ -62,4 +75,11 @@ async function findByName(name) {
   return piece;
 }
 
-export { piecesList, createPiece, updatePiece, deletePiece, findByName };
+export {
+  piecesList,
+  createPiece,
+  updatePiece,
+  deletePiece,
+  findByModuleId,
+  findByName,
+};
