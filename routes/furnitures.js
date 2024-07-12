@@ -7,6 +7,7 @@ import {
   deleteFurniture,
   findByName,
   findById,
+  updateModuleOfFurniture,
 } from "../controllers/furniture_controllers.js";
 
 const route = express.Router();
@@ -94,5 +95,8 @@ route.patch("/:furnitureId", (req, res) => {
       res.status(400).json({ success: false, error: err.message });
     });
 });
+
+// Ruta para actualizar un módulo específico dentro de un mueble
+route.put("/:furnitureId/ver-modulos/:moduleId", updateModuleOfFurniture);
 
 export default route;
