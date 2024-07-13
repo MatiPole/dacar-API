@@ -36,8 +36,10 @@ async function updateFurniture(req, id) {
     if (req.body.width) updateFields.width = req.body.width;
     if (req.body.height) updateFields.height = req.body.height;
     if (req.body.category) updateFields.category = req.body.category;
-    if (req.body.pieces_number) updateFields.pieces_number = req.body.pieces_number;
-    if (req.body.modules_furniture) updateFields.modules_furniture = req.body.modules_furniture;
+    if (req.body.pieces_number)
+      updateFields.pieces_number = req.body.pieces_number;
+    if (req.body.modules_furniture)
+      updateFields.modules_furniture = req.body.modules_furniture;
 
     let Furniture = await Furnitures.updateOne(
       { _id: id },
@@ -78,29 +80,36 @@ async function findById(id) {
   }
 }
 
+// Función para actualizar un módulo específico dentro de un mueble
 async function updateModuleOfFurniture(req, res) {
-
   try {
     const { furnitureId, moduleId } = req.params;
     const updatedModule = req.body;
-
+    // Buscar el mueble por su ID
     let furniture = await Furnitures.findById(furnitureId);
     if (!furniture) {
       return res.status(404).json({ message: "Furniture not found" });
     }
 
-    // Reemplazar el módulo dentro de modules_furniture
-    const moduleIndex = furniture.modules_furniture.findIndex(mod => mod._id.toString() === moduleId.toString());
+    // Encontrar el índice del módulo dentro de modules_furniture
+    const moduleIndex = furniture.modules_furniture.findIndex(
+      (mod) => mod._id.toString() === moduleId.toString()
+    );
+
     if (moduleIndex > -1) {
-      furniture.modules_furniture[moduleIndex] = { ...furniture.modules_furniture[moduleIndex], ...updatedModule };
+      // Reemplazar el módulo encontrado con los datos actualizados
+      furniture.modules_furniture[moduleIndex] = {
+        ...furniture.modules_furniture[moduleIndex],
+        ...updatedModule,
+      };
+
+      // Guardar los cambios en la base de datos
+      await furniture.save();
+
+      return furniture;
     } else {
       return res.status(404).json({ message: "Module not found in furniture" });
     }
-
-    
-    await furniture.save();
-
-    return res.json(furniture);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: error.message });

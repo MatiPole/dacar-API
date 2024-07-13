@@ -22,7 +22,7 @@ const furnituresSchema = new mongoose.Schema({
     required: true,
   },
   modules_furniture: {
-    type: Object,
+    type: [Object],
     required: true,
   },
 });

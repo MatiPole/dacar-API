@@ -61,7 +61,7 @@ route.get("/find-by-name/:name", (req, res) => {
     });
 });
 
-//Buscar por ID los modulos
+//Buscar por ID los muebles
 route.get("/find-by-id/:id", (req, res) => {
   let result = findById(req.params.id);
   result
@@ -97,6 +97,14 @@ route.patch("/:furnitureId", (req, res) => {
 });
 
 // Ruta para actualizar un módulo específico dentro de un mueble
-route.put("/:furnitureId/ver-modulos/:moduleId", updateModuleOfFurniture);
+route.put("/:furnitureId/ver-modulos/:moduleId", async (req, res) => {
+  try {
+    let result = await updateModuleOfFurniture(req, res);
+    console.log(result);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 export default route;
