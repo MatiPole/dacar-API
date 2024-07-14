@@ -35,18 +35,21 @@ route.post("/", async (req, res) => {
 });
 
 //Eliminar un pieza
-route.delete("/:id", verifyToken, (req, res) => {
-  let result = deletePiece(req.params.id);
-  result
-    .then((value) => {
-      res.json({
-        value,
+route.delete(
+  "/:id",
+  /* verifyToken, */ (req, res) => {
+    let result = deletePiece(req.params.id);
+    result
+      .then((value) => {
+        res.json({
+          value,
+        });
+      })
+      .catch((err) => {
+        res.status(400).json(err);
       });
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
-});
+  }
+);
 
 //Buscar por nombre los piezas
 route.get("/find-by-name/:name", (req, res) => {

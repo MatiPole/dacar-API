@@ -13,6 +13,14 @@ const piecesSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  fractionLength: {
+    type: Number,
+    required: true,
+  },
+  fractionWidth: {
+    type: Number,
+    required: true,
+  },
   category: {
     type: String,
     required: true,
