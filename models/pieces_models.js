@@ -13,11 +13,19 @@ const piecesSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  fractionLength: {
+  numeratorLength: {
     type: Number,
     required: true,
   },
-  fractionWidth: {
+  denominatorLength: {
+    type: Number,
+    required: true,
+  },
+  numeratorWidth: {
+    type: Number,
+    required: true,
+  },
+  denominatorWidth: {
     type: Number,
     required: true,
   },
@@ -33,9 +41,28 @@ const piecesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  edge: {
-    type: Object,
+  edgeLength: {
+    type: Boolean,
     required: false,
+    default: false,
+  },
+  edgeLengthSides: {
+    type: String,
+    required: false,
+  },
+  edgeWidth: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  edgeWidthSides: {
+    type: String,
+    required: false,
+  },
+  lacqueredEdge: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
   lacqueredPiece: {
     type: Boolean,

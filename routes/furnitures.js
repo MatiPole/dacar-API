@@ -100,7 +100,7 @@ route.patch("/:furnitureId", (req, res) => {
 route.put("/:furnitureId/ver-modulos/:moduleId", async (req, res) => {
   try {
     let result = await updateModuleOfFurniture(req, res);
-    console.log(result);
+    // console.log(result);
     res.json(result);
   } catch (err) {
     res.status(500).json({ message: err.message });
