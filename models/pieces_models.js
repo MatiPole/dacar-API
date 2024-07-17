@@ -13,22 +13,6 @@ const piecesSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  numeratorLength: {
-    type: Number,
-    required: true,
-  },
-  denominatorLength: {
-    type: Number,
-    required: true,
-  },
-  numeratorWidth: {
-    type: Number,
-    required: true,
-  },
-  denominatorWidth: {
-    type: Number,
-    required: true,
-  },
   category: {
     type: String,
     required: true,
