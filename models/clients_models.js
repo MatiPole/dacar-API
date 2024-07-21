@@ -26,16 +26,16 @@ const clientsSchema = new mongoose.Schema({
     required: true,
   },
   email: {
-    type: Number,
+    type: String,
     required: false,
   },
   client_type: {
     type: String,
-    required: true,
+    required: false,
   },
   tag: {
     type: String,
-    required: true,
+    required: false,
   },
   status: {
     type: Boolean,

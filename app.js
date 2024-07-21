@@ -5,6 +5,7 @@ import MainTable from "./routes/main_table.js";
 import Modules from "./routes/modules.js";
 import Pieces from "./routes/pieces.js";
 import Supplies from "./routes/supplies.js";
+import Clients from "./routes/clients.js";
 import cors from "cors";
 import "dotenv/config";
 
@@ -31,6 +32,7 @@ app.use("/main-table", MainTable);
 app.use("/modules", Modules);
 app.use("/pieces", Pieces);
 app.use("/supplies", Supplies);
+app.use("/clients", Clients);
 app.get("/", function (req, res) {
   res.send("API CORRIENDO");
 });
