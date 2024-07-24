@@ -6,6 +6,7 @@ import {
   updatePiece,
   deletePiece,
   findByModuleId,
+  getModuleAndPiecesByModuleId,
   findByName,
 } from "../controllers/pieces_controllers.js";
 
@@ -75,6 +76,16 @@ route.get("/find-by-moduleId/:moduleId", (req, res) => {
     });
 });
 
+//Buscar módulo y piezas por moduleId
+route.get("/find-module-and-pieces-by-moduleId/:moduleId", async (req, res) => {
+  try {
+    const result = await getModuleAndPiecesByModuleId(req.params.moduleId);
+    res.json(result);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 //Paginado ejemplo: localhost:3000/events/limit-events?page=1&limit=2
 route.get("/limit-pieces", (req, res) => {
   let result = limitPieces(req.query.page, req.query.limit);
@@ -87,15 +98,17 @@ route.get("/limit-pieces", (req, res) => {
     });
 });
 
-route.patch("/:pieceId", (req, res) => {
-  let result = updatePiece(req.params.eventId);
-  result
-    .then((numberOfTicketsModified) => {
-      res.json({ success: true, numberOfTicketsModified });
-    })
-    .catch((err) => {
-      res.status(400).json({ success: false, error: err.message });
-    });
+route.put("/edit-piece/:pieceId", async (req, res) => {
+  try {
+    const pieceId = req.params.pieceId;
+    const updateFields = req.body;
+
+    let result = await updatePiece(pieceId, updateFields);
+
+    res.json(result);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 });
 
 export default route;

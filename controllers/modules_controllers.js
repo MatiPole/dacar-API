@@ -21,19 +21,21 @@ async function createModule(req) {
   return await Module.save();
 }
 
-async function updateModule(req, id) {
+async function updateModule(moduleId, updateFields) {
   try {
-    let updateFields = {};
-    // Agregar campos no nulos a updateFields
-    if (req.body.name) updateFields.name = req.body.name;
-    if (req.body.length) updateFields.length = req.body.length;
-    if (req.body.width) updateFields.width = req.body.width;
-    if (req.body.category) updateFields.category = req.body.category;
-    if (req.body.pieces_number)
-      updateFields.pieces_number = req.body.pieces_number;
+    // console.log(moduleId);
+    // Actualizar el módulo con el ID dado y los campos de actualización
+    const result = await Modules.updateOne(
+      { _id: moduleId },
+      { $set: updateFields }
+    );
 
-    let Module = await Modules.updateOne({ _id: id }, { $set: updateFields });
-    return Module;
+    // Verificar si se encontró y actualizó el módulo
+    if (result.nModified === 0) {
+      throw new Error("No se encontró el módulo para actualizar");
+    }
+
+    return result;
   } catch (error) {
     throw error;
   }

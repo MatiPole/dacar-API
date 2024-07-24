@@ -1,4 +1,5 @@
 import Pieces from "../models/pieces_models.js";
+import Modules from "../models/modules_models.js";
 
 //Se buscan todas las piezas.
 async function piecesList() {
@@ -32,25 +33,25 @@ async function createPiece(req) {
   return await piece.save();
 }
 
-async function updatePiece(req, id) {
+async function updatePiece(pieceId, updateFields) {
   try {
-    let updateFields = {};
+    // console.log(pieceId);
+    // Actualizar la pieza con el ID dado y los campos de actualización
+    const result = await Pieces.updateOne(
+      { _id: pieceId },
+      { $set: updateFields }
+    );
 
-    // Agregar campos no nulos a updateFields
-    if (req.body.name) updateFields.name = req.body.name;
-    if (req.body.length) updateFields.length = req.body.length;
-    if (req.body.width) updateFields.width = req.body.width;
-    if (req.body.category) updateFields.category = req.body.category;
-    if (req.body.material) updateFields.material = req.body.material;
-    if (req.body.edge) updateFields.edge = req.body.edge;
+    // Verificar si se encontró y actualizó la pieza
+    if (result.nModified === 0) {
+      throw new Error("No se encontró la pieza para actualizar");
+    }
 
-    let piece = await Pieces.updateOne({ _id: id }, { $set: updateFields });
-    return piece;
+    return result;
   } catch (error) {
     throw error;
   }
 }
-
 async function deletePiece(id) {
   try {
     const piece = await Pieces.findById(id);
@@ -77,6 +78,18 @@ async function findByName(name) {
   });
   return piece;
 }
+async function getModuleAndPiecesByModuleId(moduleId) {
+  try {
+    const module = await Modules.findById(moduleId).exec(); // Asegúrate de tener el modelo de Modules importado
+    if (!module) {
+      throw new Error("Module not found");
+    }
+    const pieces = await Pieces.find({ module_id: moduleId }).exec();
+    return { ...module.toObject(), pieces }; // Combina el módulo con las piezas en un solo objeto
+  } catch (err) {
+    throw err;
+  }
+}
 
 export {
   piecesList,
@@ -84,5 +97,6 @@ export {
   updatePiece,
   deletePiece,
   findByModuleId,
+  getModuleAndPiecesByModuleId,
   findByName,
 };

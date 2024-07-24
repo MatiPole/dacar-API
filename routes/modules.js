@@ -84,15 +84,17 @@ route.get("/limit-modules", (req, res) => {
     });
 });
 
-route.patch("/:moduleId", (req, res) => {
-  let result = updateModule(req.params.eventId);
-  result
-    .then((numberOfTicketsModified) => {
-      res.json({ success: true, numberOfTicketsModified });
-    })
-    .catch((err) => {
-      res.status(400).json({ success: false, error: err.message });
-    });
+route.put("/edit-module/:moduleId", async (req, res) => {
+  try {
+    const moduleId = req.params.moduleId;
+    const updateFields = req.body;
+
+    let result = await updateModule(moduleId, updateFields);
+
+    res.json(result);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 });
 
 export default route;
