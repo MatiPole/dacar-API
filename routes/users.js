@@ -13,7 +13,7 @@ import {
   orderByEmail,
   sendEmailForgotPass,
   resetPassword,
-} from "../controllers/users_controller.js";
+} from "../controllers/users_controllers.js";
 import Joi from "joi";
 import bcrypt from "bcrypt";
 const route = express.Router();

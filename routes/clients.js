@@ -9,7 +9,7 @@ import {
   updateClient,
   deleteClient,
   findByName,
-} from "../controllers/clients_controller.js";
+} from "../controllers/clients_controllers.js";
 
 const route = express.Router();
 

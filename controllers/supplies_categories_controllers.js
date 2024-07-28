@@ -1,25 +1,28 @@
-import Categories from "../models/categories_models.js";
+import SuppliesCategories from "../models/supplies_categories_models.js";
 
 async function categoriesList() {
-  let category = await Categories.find({ status: true });
+  let category = await SuppliesCategories.find({ status: true }).sort({
+    name: 1,
+  });
   return category;
 }
 
 async function findCategory(id) {
-  let category = await Categories.find({ _id: id });
+  let category = await SuppliesCategories.find({ _id: id });
   return category;
 }
 
 async function createCategory(body) {
-  let category = new Categories({
+  console.log(body.name);
+  let category = new SuppliesCategories({
     name: body.name,
     status: body.status,
   });
   return await category.save();
 }
 
-async function updateCategories(body, id) {
-  let category = await Categories.updateOne(
+async function updateSuppliesCategories(body, id) {
+  let category = await SuppliesCategories.updateOne(
     { _id: id },
     {
       $set: {
@@ -32,7 +35,7 @@ async function updateCategories(body, id) {
 }
 
 async function deleteCategory(id) {
-  let category = await Categories.deleteOne({ _id: id });
+  let category = await SuppliesCategories.deleteOne({ _id: id });
   return category;
 }
 
@@ -40,6 +43,6 @@ export {
   categoriesList,
   findCategory,
   createCategory,
-  updateCategories,
+  updateSuppliesCategories,
   deleteCategory,
 };

@@ -41,6 +41,22 @@ async function updateModule(moduleId, updateFields) {
   }
 }
 
+async function updateModulePiecesNumber(moduleId, piecesNumber) {
+  try {
+    const updatedModule = await Modules.findByIdAndUpdate(moduleId, {
+      pieces_number: piecesNumber,
+    });
+
+    if (!updatedModule) {
+      throw new Error("Módulo no encontrado");
+    }
+
+    return updatedModule;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
 async function deleteModule(id) {
   try {
     const Module = await Modules.findById(id);
@@ -74,6 +90,7 @@ export {
   moduleList,
   createModule,
   updateModule,
+  updateModulePiecesNumber,
   deleteModule,
   findByName,
   findById,

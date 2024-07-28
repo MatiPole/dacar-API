@@ -5,6 +5,7 @@ import MainTable from "./routes/main_table.js";
 import Modules from "./routes/modules.js";
 import Pieces from "./routes/pieces.js";
 import Supplies from "./routes/supplies.js";
+import SuppliesCategories from "./routes/supplies_categories.js";
 import Services from "./routes/services.js";
 import Clients from "./routes/clients.js";
 import cors from "cors";
@@ -33,6 +34,7 @@ app.use("/main-table", MainTable);
 app.use("/modules", Modules);
 app.use("/pieces", Pieces);
 app.use("/supplies", Supplies);
+app.use("/supplies-categories", SuppliesCategories);
 app.use("/services", Services);
 app.use("/clients", Clients);
 app.get("/", function (req, res) {

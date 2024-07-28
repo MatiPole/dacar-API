@@ -4,6 +4,7 @@ import {
   moduleList,
   createModule,
   updateModule,
+  updateModulePiecesNumber,
   deleteModule,
   findByName,
   findById,
@@ -90,6 +91,19 @@ route.put("/edit-module/:moduleId", async (req, res) => {
     const updateFields = req.body;
 
     let result = await updateModule(moduleId, updateFields);
+
+    res.json(result);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+route.patch("/edit-module-pieces/:moduleId", async (req, res) => {
+  try {
+    const moduleId = req.params.moduleId;
+    const { pieces_number } = req.body;
+
+    let result = await updateModulePiecesNumber(moduleId, pieces_number);
 
     res.json(result);
   } catch (err) {

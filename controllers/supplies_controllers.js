@@ -8,14 +8,14 @@ async function suppliesList() {
 
 //Se buscan todas las placas.
 async function suppliesTablesList() {
-  let supplie = await Supplies.find({ category: "PLACA" });
+  let supplie = await Supplies.find({ category: "Placa" });
   return supplie;
 }
 
 //Se buscan todos insumos menos las placas.
 const suppliesExceptTablesList = async () => {
   try {
-    return await Supplies.find({ category: { $ne: "PLACA" } });
+    return await Supplies.find({ category: { $ne: "Placa" } });
   } catch (error) {
     console.error("Error fetching supplies:", error);
     throw error;
