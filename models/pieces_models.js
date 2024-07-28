@@ -81,6 +81,11 @@ const piecesSchema = new mongoose.Schema({
     required: false,
     default: false,
   },
+  loose_piece: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
   module_id: {
     type: String,
     required: true,

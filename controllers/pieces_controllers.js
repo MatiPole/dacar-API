@@ -27,6 +27,7 @@ async function createPiece(req) {
     melamine: req.body.melamine,
     melamineLacquered: req.body.melamineLacquered,
     pantographed: req.body.pantographed,
+    loose_piece: req.body.loose_piece,
     module_id: req.body.moduleId,
   });
 
