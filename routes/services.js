@@ -4,25 +4,25 @@ import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
 import path from "path";
 import {
-  suppliesList,
-  createSupplie,
-  updateSupplie,
-  deleteSupplie,
+  sirvicesList,
+  createService,
+  updateService,
+  deleteService,
   suppliesTablesList,
   suppliesExceptTablesList,
   findByName,
-  supplieById,
-} from "../controllers/supplies_controllers.js";
+  serviceById,
+} from "../controllers/services_controllers.js";
 
 const route = express.Router();
 
 //En todas las rutas aplicamos autenticación por medio de nuestro middleware verifyToken
 //Búsqueda eventos para adminsitrador
 route.get("/", (req, res) => {
-  let result = suppliesList();
+  let result = sirvicesList();
   result
-    .then((supplie) => {
-      res.json(supplie);
+    .then((service) => {
+      res.json(service);
     })
     .catch((err) => {
       res.status(400).json({ err });
@@ -51,13 +51,13 @@ route.get("/supplies-not-tables", (req, res) => {
     });
 });
 
-//Crear insumo
+//Crear servicio
 route.post("/", async (req, res) => {
   try {
-    const supplie = await createSupplie(req);
-    res.json({ supplie });
+    const service = await createService(req);
+    res.json({ service });
   } catch (err) {
-    res.status(400).json({ error: err.message || "Error al crear main table" });
+    res.status(400).json({ error: err.message || "Error al crear servicio" });
   }
 });
 
@@ -65,7 +65,7 @@ route.post("/", async (req, res) => {
 route.delete(
   "/:id",
   /* verifyToken, */ (req, res) => {
-    let result = deleteSupplie(req.params.id);
+    let result = deleteService(req.params.id);
     result
       .then((value) => {
         res.json({
@@ -102,10 +102,10 @@ route.get("/limit-events", (req, res) => {
     });
 });
 
-route.put("/edit-supplie/:supplieId", async (req, res) => {
+route.put("/edit-service/:serviceId", async (req, res) => {
   try {
     const updateFields = req.body;
-    let result = await updateSupplie(req.params.supplieId, updateFields);
+    let result = await updateService(req.params.serviceId, updateFields);
 
     res.json(result);
   } catch (err) {
@@ -113,8 +113,8 @@ route.put("/edit-supplie/:supplieId", async (req, res) => {
   }
 });
 
-route.get("/:supplieId", (req, res) => {
-  let result = supplieById(req.params.supplieId);
+route.get("/:serviceId", (req, res) => {
+  let result = serviceById(req.params.serviceId);
   result
     .then((value) => {
       res.json(value);

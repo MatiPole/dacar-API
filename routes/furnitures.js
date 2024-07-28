@@ -4,7 +4,7 @@ import {
   furnitureList,
   createFurniture,
   updateFurniture,
-  deleteFurniture,
+  deleteModuleOnFurniture,
   findByName,
   findById,
   updateModuleOfFurniture,
@@ -49,6 +49,21 @@ route.delete("/:id", verifyToken, (req, res) => {
     });
 });
 
+//Eliminar un modulo del mueble
+route.patch("/modulo-en-mueble/:furnitureId/:moduleId", async (req, res) => {
+  try {
+    let result = await deleteModuleOnFurniture(
+      req.params.furnitureId,
+      req.params.moduleId
+    );
+    res.json({
+      value: result,
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
 //Buscar por nombre los furniture
 route.get("/find-by-name/:name", (req, res) => {
   let result = findByName(req.params.name);
@@ -85,17 +100,16 @@ route.get("/limit-modules", (req, res) => {
     });
 });
 
-route.patch("/:furnitureId", (req, res) => {
-  let result = updateFurniture(req.params.eventId);
-  result
-    .then((numberOfTicketsModified) => {
-      res.json({ success: true, numberOfTicketsModified });
-    })
-    .catch((err) => {
-      res.status(400).json({ success: false, error: err.message });
-    });
+//Actualizar los datos del mueble y agregarle modulos
+route.put("/update-furniture/:furnitureId", async (req, res) => {
+  try {
+    let result = await updateFurniture(req, res);
+    // console.log(result);
+    res.json(result);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 });
-
 // Ruta para actualizar un módulo específico dentro de un mueble
 route.put("/:furnitureId/ver-modulos/:moduleId", async (req, res) => {
   try {

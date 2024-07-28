@@ -38,19 +38,19 @@ async function createSupplie(req) {
   return await supplie.save();
 }
 
-async function updateSupplie(req, id) {
+async function updateSupplie(supplieId, updateFields) {
   try {
-    let updateFields = {};
-    // Agregar campos no nulos a updateFields
-    if (req.body.name) updateFields.name = req.body.name;
-    if (req.body.length) updateFields.length = req.body.length;
-    if (req.body.width) updateFields.width = req.body.width;
-    if (req.body.thickness) updateFields.thickness = req.body.thickness;
-    if (req.body.category) updateFields.category = req.body.category;
-    if (req.body.material) updateFields.material = req.body.material;
-
-    let supplie = await Supplies.updateOne({ _id: id }, { $set: updateFields });
-    return supplie;
+    // console.log(pieceId);
+    // Actualizar la pieza con el ID dado y los campos de actualización
+    const result = await Supplies.updateOne(
+      { _id: supplieId },
+      { $set: updateFields }
+    );
+    // Verificar si se encontró y actualizó el insumo
+    if (result.nModified === 0) {
+      throw new Error("No se encontró el insumo para actualizar");
+    }
+    return result;
   } catch (error) {
     throw error;
   }
@@ -64,7 +64,7 @@ async function deleteSupplie(id) {
     }
     return supplie;
   } catch (err) {
-    res.status(400).send(err + "Error al eliminar la tabla");
+    res.status(400).send(err + "Error al eliminar el insumo");
   }
 }
 
@@ -75,6 +75,14 @@ async function findByName(name) {
   });
   return supplie;
 }
+async function supplieById(id) {
+  try {
+    const supplie = await Supplies.findById(id);
+    return supplie;
+  } catch (err) {
+    throw err;
+  }
+}
 
 export {
   suppliesList,
@@ -84,4 +92,5 @@ export {
   suppliesTablesList,
   suppliesExceptTablesList,
   findByName,
+  supplieById,
 };

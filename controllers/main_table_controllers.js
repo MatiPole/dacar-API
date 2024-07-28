@@ -14,6 +14,7 @@ async function createMainTable(req) {
     thickness: req.body.thickness,
     category: req.body.category,
     material: req.body.material,
+    price: req.body.price,
   });
 
   return await table.save();

@@ -27,30 +27,27 @@ async function createFurniture(req, res) {
   }
 }
 
-async function updateFurniture(req, id) {
-  try {
-    let updateFields = {};
-    // Agregar campos no nulos a updateFields
-    if (req.body.name) updateFields.name = req.body.name;
-    if (req.body.length) updateFields.length = req.body.length;
-    if (req.body.width) updateFields.width = req.body.width;
-    if (req.body.height) updateFields.height = req.body.height;
-    if (req.body.category) updateFields.category = req.body.category;
-    if (req.body.pieces_number)
-      updateFields.pieces_number = req.body.pieces_number;
-    if (req.body.modules_furniture)
-      updateFields.modules_furniture = req.body.modules_furniture;
+async function updateFurniture(req, res) {
+  const { furnitureId } = req.params;
+  const updateData = req.body;
 
-    let Furniture = await Furnitures.updateOne(
-      { _id: id },
-      { $set: updateFields }
+  try {
+    const updatedFurniture = await Furnitures.findByIdAndUpdate(
+      furnitureId,
+      { $set: updateData },
+      { new: true }
     );
-    return Furniture;
+
+    if (!updatedFurniture) {
+      return res.status(404).json({ message: "Furniture not found" });
+    }
+
+    return updatedFurniture;
   } catch (error) {
     throw error;
   }
 }
-
+//eliminar mueble completo
 async function deleteFurniture(id) {
   try {
     const Furniture = await Furnitures.findById(id);
@@ -58,6 +55,34 @@ async function deleteFurniture(id) {
       await Furnitures.deleteOne({ _id: id });
     }
     return Furniture;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function deleteModuleOnFurniture(furnitureId, moduleId) {
+  try {
+    // Encuentra el mueble por furnitureId
+    const furniture = await Furnitures.findById(furnitureId);
+    if (!furniture) {
+      throw new Error("Furniture not found");
+    }
+    // Encuentra el índice del módulo con el moduleId correspondiente
+    const moduleIndex = furniture.modules_furniture.findIndex(
+      (module) => module._id.toString() === moduleId
+    );
+
+    // Si se encuentra el módulo, elimínalo del array
+    if (moduleIndex !== -1) {
+      furniture.modules_furniture.splice(moduleIndex, 1);
+    } else {
+      throw new Error("Module not found");
+    }
+
+    // Guarda el mueble actualizado en la base de datos
+    await furniture.save();
+
+    return furniture;
   } catch (err) {
     throw err;
   }
@@ -122,6 +147,7 @@ export {
   updateFurniture,
   updateModuleOfFurniture,
   deleteFurniture,
+  deleteModuleOnFurniture,
   findByName,
   findById,
 };
