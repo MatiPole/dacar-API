@@ -9,6 +9,8 @@ import {
   updateSupplie,
   deleteSupplie,
   suppliesTablesList,
+  suppliesEdgesList,
+  suppliesVeneerList,
   suppliesExceptTablesList,
   findByName,
   supplieById,
@@ -28,7 +30,7 @@ route.get("/", (req, res) => {
       res.status(400).json({ err });
     });
 });
-
+//traer solo placas
 route.get("/tables", (req, res) => {
   let result = suppliesTablesList();
   result
@@ -40,6 +42,31 @@ route.get("/tables", (req, res) => {
     });
 });
 
+//traer solo filos
+route.get("/edges", (req, res) => {
+  let result = suppliesEdgesList();
+  result
+    .then((supplie) => {
+      res.json(supplie);
+    })
+    .catch((err) => {
+      res.status(400).json({ err });
+    });
+});
+
+//traer solo chapa
+route.get("/veneer", (req, res) => {
+  let result = suppliesVeneerList();
+  result
+    .then((supplie) => {
+      res.json(supplie);
+    })
+    .catch((err) => {
+      res.status(400).json({ err });
+    });
+});
+
+//traer todo excepto placas y filos
 route.get("/supplies-not-tables", (req, res) => {
   let result = suppliesExceptTablesList();
   result

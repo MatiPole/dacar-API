@@ -12,10 +12,22 @@ async function suppliesTablesList() {
   return supplie;
 }
 
+//Se buscan todos los filos.
+async function suppliesEdgesList() {
+  let supplie = await Supplies.find({ category: "Filo" });
+  return supplie;
+}
+
+//Se buscan todos las chapa.
+async function suppliesVeneerList() {
+  let supplie = await Supplies.find({ category: "Chapa" });
+  return supplie;
+}
+
 //Se buscan todos insumos menos las placas.
 const suppliesExceptTablesList = async () => {
   try {
-    return await Supplies.find({ category: { $ne: "Placa" } });
+    return await Supplies.find({ category: { $nin: ["Placa", "Filo"] } });
   } catch (error) {
     console.error("Error fetching supplies:", error);
     throw error;
@@ -90,6 +102,8 @@ export {
   updateSupplie,
   deleteSupplie,
   suppliesTablesList,
+  suppliesEdgesList,
+  suppliesVeneerList,
   suppliesExceptTablesList,
   findByName,
   supplieById,

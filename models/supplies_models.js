@@ -26,7 +26,7 @@ const suppliesSchema = new mongoose.Schema({
   },
   material: {
     type: String,
-    required: true,
+    required: false,
   },
   price: {
     type: String,
