@@ -60,5 +60,20 @@ async function findByName(name) {
   });
   return client;
 }
+async function clientById(id) {
+  try {
+    const client = await Clients.findById(id);
+    return client;
+  } catch (err) {
+    throw err;
+  }
+}
 
-export { clientsList, createClient, updateClient, deleteClient, findByName };
+export {
+  clientsList,
+  createClient,
+  updateClient,
+  deleteClient,
+  findByName,
+  clientById,
+};

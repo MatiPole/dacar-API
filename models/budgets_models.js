@@ -2,11 +2,15 @@ import mongoose from "mongoose";
 
 const budgetsSchema = new mongoose.Schema({
   budget_number: {
-    type: String,
+    type: Number,
     required: true,
   },
   furniture_name: {
     type: String,
+    required: true,
+  },
+  length: {
+    type: Number,
     required: true,
   },
   width: {
@@ -21,13 +25,57 @@ const budgetsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  materials: {
-    type: Array,
-    required: true,
-  },
   furniture: {
     type: [Object],
     required: true,
+  },
+  veneer: {
+    type: [Object],
+    required: false,
+  },
+  veneerPolished: {
+    type: [Object],
+    required: false,
+  },
+  chapa: {
+    type: [Object],
+    required: false,
+  },
+  lacquered: {
+    type: [Object],
+    required: false,
+  },
+  pantographed: {
+    type: [Object],
+    required: false,
+  },
+  edge_lacquered: {
+    type: [Object],
+    required: false,
+  },
+  edge_no_lacquered: {
+    type: [Object],
+    required: false,
+  },
+  supplies: {
+    type: [Object],
+    required: false,
+  },
+  materials: {
+    type: [Object],
+    required: true,
+  },
+  extra_items: {
+    type: [Object],
+    required: false,
+  },
+  adjustment_reason: {
+    type: String,
+    required: false,
+  },
+  adjustment_price: {
+    type: String,
+    required: false,
   },
   username: {
     type: String,
@@ -38,7 +86,19 @@ const budgetsSchema = new mongoose.Schema({
     required: true,
   },
   date: {
-    type: string,
+    type: Date,
+    default: Date.now,
+  },
+  deliver_date: {
+    type: String,
+    required: false,
+  },
+  comments: {
+    type: String,
+    required: false,
+  },
+  client: {
+    type: [Object],
     required: true,
   },
   status: {

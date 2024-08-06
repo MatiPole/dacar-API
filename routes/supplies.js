@@ -84,7 +84,7 @@ route.post("/", async (req, res) => {
     const supplie = await createSupplie(req);
     res.json({ supplie });
   } catch (err) {
-    res.status(400).json({ error: err.message || "Error al crear main table" });
+    res.status(400).json({ error: err.message || "Error al crear el insumo" });
   }
 });
 

@@ -8,6 +8,7 @@ import Supplies from "./routes/supplies.js";
 import SuppliesCategories from "./routes/supplies_categories.js";
 import Services from "./routes/services.js";
 import Clients from "./routes/clients.js";
+import Budgets from "./routes/budgets.js";
 import cors from "cors";
 import "dotenv/config";
 
@@ -37,6 +38,7 @@ app.use("/supplies", Supplies);
 app.use("/supplies-categories", SuppliesCategories);
 app.use("/services", Services);
 app.use("/clients", Clients);
+app.use("/budgets", Budgets);
 app.get("/", function (req, res) {
   res.send("API CORRIENDO");
 });

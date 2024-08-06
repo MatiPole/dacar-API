@@ -9,6 +9,7 @@ import {
   updateClient,
   deleteClient,
   findByName,
+  clientById,
 } from "../controllers/clients_controllers.js";
 
 const route = express.Router();
@@ -26,7 +27,7 @@ route.get("/", (req, res) => {
     });
 });
 
-//Crear main table
+//Crear cliente
 route.post("/", async (req, res) => {
   try {
     const client = await createClient(req);
@@ -50,9 +51,21 @@ route.delete("/:id", verifyToken, (req, res) => {
     });
 });
 
-//Buscar por nombre los eventos
+//Buscar por nombre
 route.get("/find-by-name/:name", (req, res) => {
   let result = findByName(req.params.name);
+  result
+    .then((value) => {
+      res.json(value);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
+
+//Buscar por nombre
+route.get("/:clientId", (req, res) => {
+  let result = clientById(req.params.clientId);
   result
     .then((value) => {
       res.json(value);
