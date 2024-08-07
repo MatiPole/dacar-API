@@ -32,6 +32,8 @@ async function createBudget(req) {
     deliver_date: req.body.deliver_date,
     comments: req.body.comments,
     client: req.body.client,
+    placement: req.body.placement,
+    shipment: req.body.shipment,
     status: true,
   });
 

@@ -101,6 +101,14 @@ const budgetsSchema = new mongoose.Schema({
     type: [Object],
     required: true,
   },
+  placement: {
+    type: Boolean,
+    required: true,
+  },
+  shipment: {
+    type: Boolean,
+    required: true,
+  },
   status: {
     type: String,
     required: true,

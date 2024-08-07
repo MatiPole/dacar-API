@@ -79,7 +79,7 @@ route.delete(
   }
 );
 
-route.get("/:budgetId", (req, res) => {
+route.get("/find-by-id/:budgetId", (req, res) => {
   let result = budgetById(req.params.budgetId);
   result
     .then((value) => {
