@@ -33,7 +33,10 @@ async function createBudget(req) {
     comments: req.body.comments,
     client: req.body.client,
     placement: req.body.placement,
+    placement_price: req.body.placement_price,
     shipment: req.body.shipment,
+    shipment_price: req.body.shipment_price,
+    show_modules: req.body.show_modules,
     status: true,
   });
 
