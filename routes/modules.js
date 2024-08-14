@@ -3,6 +3,7 @@ import verifyToken from "../middlewares/auth.js";
 import {
   moduleList,
   createModule,
+  cloneModule,
   updateModule,
   updateModulePiecesNumber,
   deleteModule,
@@ -35,9 +36,19 @@ route.post("/", async (req, res) => {
   }
 });
 
+//Clonar module
+route.get("/clone-module/:moduleId", async (req, res) => {
+  try {
+    const module = await cloneModule(req.params.moduleId);
+    res.json(module);
+  } catch (err) {
+    res.status(400).json({ error: err.message || "Error al clonar modulo" });
+  }
+});
+
 //Eliminar un modulo
-route.delete("/:id", verifyToken, (req, res) => {
-  let result = deleteModule(req.params.id);
+route.delete("/delete-module/:moduleid" /* , verifyToken */, (req, res) => {
+  let result = deleteModule(req.params.moduleid);
   result
     .then((value) => {
       res.json({

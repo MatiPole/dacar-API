@@ -1,4 +1,5 @@
 import Modules from "../models/modules_models.js";
+import Pieces from "../models/pieces_models.js";
 
 //Se traen todos los modulos
 async function moduleList() {
@@ -19,6 +20,47 @@ async function createModule(req) {
   });
 
   return await Module.save();
+}
+
+async function cloneModule(moduleId) {
+  // Buscar el módulo original por su ID
+  const originalModule = await Modules.findById(moduleId);
+
+  if (!originalModule) {
+    throw new Error("Módulo no encontrado");
+  }
+
+  // Duplicar el módulo, excluyendo el _id para que se genere uno nuevo
+  const clonedModule = new Modules({
+    ...originalModule.toObject(),
+    _id: undefined, // Para que MongoDB genere un nuevo ObjectId
+    name: `${originalModule.name} (copia)`,
+    createdAt: new Date(), // Actualizar la fecha de creación
+    updatedAt: new Date(), // Actualizar la fecha de actualización
+  });
+
+  // Guardar el módulo duplicado en la base de datos
+  const newModule = await clonedModule.save();
+
+  // Buscar todas las piezas relacionadas con el módulo original
+  const originalPieces = await Pieces.find({ module_id: moduleId });
+
+  // Duplicar cada pieza y asignarle el nuevo module_id
+  const clonedPieces = originalPieces.map((piece) => {
+    const newPiece = new Pieces({
+      ...piece.toObject(),
+      _id: undefined, // Generar un nuevo ObjectId para cada pieza
+      module_id: newModule._id, // Asignar el nuevo module_id
+      createdAt: new Date(), // Actualizar la fecha de creación
+      updatedAt: new Date(), // Actualizar la fecha de actualización
+    });
+    return newPiece.save(); // Guardar cada pieza duplicada
+  });
+
+  // Esperar a que todas las piezas se guarden
+  await Promise.all(clonedPieces);
+
+  return newModule; // Retornar el nuevo módulo duplicado
 }
 
 async function updateModule(moduleId, updateFields) {
@@ -57,15 +99,21 @@ async function updateModulePiecesNumber(moduleId, piecesNumber) {
   }
 }
 
-async function deleteModule(id) {
+async function deleteModule(moduleId) {
   try {
-    const Module = await Modules.findById(id);
-    if (Module) {
-      await Modules.deleteOne({ _id: id });
+    // Eliminar el módulo con el ID proporcionado
+    const deletedModule = await Modules.findByIdAndDelete(moduleId);
+
+    if (!deletedModule) {
+      throw new Error("Módulo no encontrado");
     }
-    return Module;
+
+    // Eliminar todas las piezas asociadas al módulo
+    await Pieces.deleteMany({ module_id: moduleId });
+
+    return { message: "Módulo y piezas eliminados correctamente" };
   } catch (err) {
-    res.status(400).send(err + "Error al eliminar la tabla");
+    throw new Error(err.message || "Error al eliminar el módulo y sus piezas");
   }
 }
 
@@ -89,6 +137,7 @@ async function findById(id) {
 export {
   moduleList,
   createModule,
+  cloneModule,
   updateModule,
   updateModulePiecesNumber,
   deleteModule,
