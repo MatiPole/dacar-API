@@ -23,7 +23,7 @@ async function createBudget(req) {
     edge_lacquered: req.body.edge_lacquered,
     edge_no_lacquered: req.body.edge_no_lacquered,
     supplies: req.body.supplies,
-    material: req.body.material,
+    materials: req.body.materials,
     extra_items: req.body.extra_items,
     adjustment_reason: req.body.adjustment_reason,
     adjustment_price: req.body.adjustment_price,
