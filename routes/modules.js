@@ -61,15 +61,13 @@ route.delete("/delete-module/:moduleid" /* , verifyToken */, (req, res) => {
 });
 
 //Buscar por nombre los modulos
-route.get("/find-by-name/:name", (req, res) => {
-  let result = findByName(req.params.name);
-  result
-    .then((value) => {
-      res.json(value);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
+route.get("/find-by-name/:name", async (req, res) => {
+  try {
+    let result = await findByName(req.params.name);
+    res.json(result);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 //Buscar por ID los modulos

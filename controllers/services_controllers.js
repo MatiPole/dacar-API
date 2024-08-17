@@ -63,12 +63,12 @@ async function deleteService(id) {
 }
 
 async function findByName(name) {
-  let nameInsensitive = "(?i)" + name;
   let supplie = await Services.find({
-    name: { $regex: nameInsensitive },
+    name: { $regex: new RegExp(name, "i") },
   });
   return supplie;
 }
+
 async function serviceById(serviceId) {
   try {
     const service = await Services.findById(serviceId);

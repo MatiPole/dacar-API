@@ -81,12 +81,12 @@ async function deleteSupplie(id) {
 }
 
 async function findByName(name) {
-  let nameInsensitive = "(?i)" + name;
   let supplie = await Supplies.find({
-    name: { $regex: nameInsensitive },
+    name: { $regex: new RegExp(name, "i") },
   });
   return supplie;
 }
+
 async function supplieById(id) {
   try {
     const supplie = await Supplies.findById(id);

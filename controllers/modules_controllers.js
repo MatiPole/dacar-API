@@ -118,11 +118,10 @@ async function deleteModule(moduleId) {
 }
 
 async function findByName(name) {
-  let nameInsensitive = "(?i)" + name;
-  let Module = await Modules.find({
-    name: { $regex: nameInsensitive },
+  let supplie = await Modules.find({
+    name: { $regex: new RegExp(name, "i") },
   });
-  return Module;
+  return supplie;
 }
 
 async function findById(id) {

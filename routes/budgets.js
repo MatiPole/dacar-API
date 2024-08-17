@@ -8,7 +8,7 @@ import {
   createBudget,
   updateBudget,
   deleteBudget,
-  findByName,
+  findByClientName,
   budgetById,
   getLastBudgetNum,
 } from "../controllers/budget_controllers.js";
@@ -50,16 +50,14 @@ route.post("/", async (req, res) => {
   }
 });
 
-//Buscar por nombre los presupuestos
-route.get("/find-by-name/:name", (req, res) => {
-  let result = findByName(req.params.name);
-  result
-    .then((value) => {
-      res.json(value);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
+//Buscar presupuesto por nombre de cliente
+route.get("/find-by-client-name/:name", async (req, res) => {
+  try {
+    let result = await findByClientName(req.params.name);
+    res.json(result);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 //Eliminar un presupuesto

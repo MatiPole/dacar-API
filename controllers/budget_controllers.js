@@ -73,13 +73,17 @@ async function deleteBudget(id) {
   }
 }
 
-async function findByName(name) {
-  let nameInsensitive = "(?i)" + name;
-  let budget = await Budgets.find({
-    name: { $regex: nameInsensitive },
+async function findByClientName(searchTerm) {
+  let searchRegex = new RegExp(searchTerm, "i"); // Expresión regular insensible a mayúsculas/minúsculas
+  let budgets = await Budgets.find({
+    $or: [
+      { "client.name": { $regex: searchRegex } },
+      { "client.lastname": { $regex: searchRegex } },
+    ],
   });
-  return budget;
+  return budgets;
 }
+
 async function budgetById(id) {
   try {
     const budget = await Budgets.findById(id);
@@ -105,7 +109,7 @@ export {
   createBudget,
   updateBudget,
   deleteBudget,
-  findByName,
+  findByClientName,
   budgetById,
   getLastBudgetNum,
 };

@@ -78,16 +78,14 @@ route.delete(
   }
 );
 
-//Buscar por nombre los insumos
-route.get("/find-by-name/:name", (req, res) => {
-  let result = findByName(req.params.name);
-  result
-    .then((value) => {
-      res.json(value);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
+//Buscar por nombre los servicios
+route.get("/find-by-name/:name", async (req, res) => {
+  try {
+    let result = await findByName(req.params.name);
+    res.json(result);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 //Paginado ejemplo: localhost:3000/events/limit-events?page=1&limit=2
