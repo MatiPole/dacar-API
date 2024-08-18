@@ -4,6 +4,7 @@ import {
   furnitureList,
   createFurniture,
   updateFurniture,
+  deleteFurniture,
   deleteModuleOnFurniture,
   findByName,
   findById,
@@ -60,7 +61,7 @@ route.post("/", async (req, res) => {
 });
 
 //Eliminar un furniture
-route.delete("/:id", verifyToken, (req, res) => {
+route.delete("/delete-furniture/:id", (req, res) => {
   let result = deleteFurniture(req.params.id);
   result
     .then((value) => {
