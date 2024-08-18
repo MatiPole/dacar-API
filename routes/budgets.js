@@ -38,6 +38,17 @@ route.get("/last-number", async (req, res) => {
   }
 });
 
+route.get("/find-by-id/:budgetId", (req, res) => {
+  let result = budgetById(req.params.budgetId);
+  result
+    .then((value) => {
+      res.json(value);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
+
 //Crear presupuesto
 route.post("/", async (req, res) => {
   try {
@@ -76,16 +87,5 @@ route.delete(
       });
   }
 );
-
-route.get("/find-by-id/:budgetId", (req, res) => {
-  let result = budgetById(req.params.budgetId);
-  result
-    .then((value) => {
-      res.json(value);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
-});
 
 export default route;

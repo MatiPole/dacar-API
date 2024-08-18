@@ -141,6 +141,52 @@ async function updateModuleOfFurniture(req, res) {
   }
 }
 
+//obtener las piezas sueltas para el excel
+const getLoosePiecesByFurnitureId = async (furnitureId) => {
+  try {
+    // Encuentra el mueble por su ID y trae los módulos relacionados
+    const furniture = await Furnitures.findById(furnitureId);
+
+    if (!furniture) {
+      throw new Error("Mueble no encontrado");
+    }
+
+    // Filtra las piezas sueltas en todos los módulos
+    const loosePieces = furniture.modules_furniture.flatMap((module) =>
+      module.pieces.filter((piece) => piece.loose_piece)
+    );
+
+    return loosePieces;
+  } catch (error) {
+    throw new Error("Error al obtener las piezas sueltas: " + error.message);
+  }
+};
+
+// Función para obtener todas las piezas de un mueble
+async function getAllPiecesByFurnitureId(furnitureId) {
+  try {
+    // Obtener el mueble por su ID
+    const furniture = await Furnitures.findById(furnitureId).populate(
+      "modules_furniture.pieces"
+    );
+
+    if (!furniture) {
+      throw new Error("Mueble no encontrado");
+    }
+
+    // Extraer todas las piezas de todos los módulos
+    let allPieces = [];
+    furniture.modules_furniture.forEach((module) => {
+      allPieces = allPieces.concat(module.pieces);
+    });
+
+    return allPieces;
+  } catch (error) {
+    console.error("Error al obtener todas las piezas:", error);
+    throw error;
+  }
+}
+
 export {
   furnitureList,
   createFurniture,
@@ -150,4 +196,6 @@ export {
   deleteModuleOnFurniture,
   findByName,
   findById,
+  getLoosePiecesByFurnitureId,
+  getAllPiecesByFurnitureId,
 };

@@ -8,6 +8,8 @@ import {
   findByName,
   findById,
   updateModuleOfFurniture,
+  getLoosePiecesByFurnitureId,
+  getAllPiecesByFurnitureId,
 } from "../controllers/furniture_controllers.js";
 
 const route = express.Router();
@@ -23,6 +25,28 @@ route.get("/", (req, res) => {
     .catch((err) => {
       res.status(400).json({ err });
     });
+});
+
+// Obtener las piezas sueltas
+route.get("/find-loose-pieces/:furnitureId", async (req, res) => {
+  try {
+    const loosePieces = await getLoosePiecesByFurnitureId(
+      req.params.furnitureId
+    );
+    res.json(loosePieces);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Obtener las piezas del mueble
+route.get("/find-furniture-pieces/:furnitureId", async (req, res) => {
+  try {
+    const pieces = await getAllPiecesByFurnitureId(req.params.furnitureId);
+    res.json(pieces);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 //Crear furniture
