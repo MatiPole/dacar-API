@@ -34,6 +34,7 @@ async function createBudget(req) {
     client: req.body.client,
     placement: req.body.placement,
     placement_price: req.body.placement_price,
+    placement_days: req.body.placement_days,
     shipment: req.body.shipment,
     shipment_price: req.body.shipment_price,
     show_modules: req.body.show_modules,

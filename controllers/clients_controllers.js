@@ -23,19 +23,17 @@ async function createClient(req) {
   return await client.save();
 }
 
-async function updateClient(req, id) {
+async function updateClient(clientId, updateFields) {
   try {
-    let updateFields = {};
-    // Agregar campos no nulos a updateFields
-    if (req.body.name) updateFields.name = req.body.name;
-    if (req.body.length) updateFields.length = req.body.length;
-    if (req.body.width) updateFields.width = req.body.width;
-    if (req.body.thickness) updateFields.thickness = req.body.thickness;
-    if (req.body.category) updateFields.category = req.body.category;
-    if (req.body.material) updateFields.material = req.body.material;
-
-    let client = await Clients.updateOne({ _id: id }, { $set: updateFields });
-    return client;
+    const result = await Clients.updateOne(
+      { _id: clientId },
+      { $set: updateFields }
+    );
+    // Verificar si se encontró y actualizó el cliente
+    if (result.nModified === 0) {
+      throw new Error("No se encontró el cliente para actualizar");
+    }
+    return result;
   } catch (error) {
     throw error;
   }
@@ -54,12 +52,15 @@ async function deleteClient(id) {
 }
 
 async function findByName(name) {
-  let nameInsensitive = "(?i)" + name;
   let client = await Clients.find({
-    name: { $regex: nameInsensitive },
+    $or: [
+      { name: { $regex: new RegExp(name, "i") } },
+      { lastname: { $regex: new RegExp(name, "i") } },
+    ],
   });
   return client;
 }
+
 async function clientById(id) {
   try {
     const client = await Clients.findById(id);

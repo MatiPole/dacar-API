@@ -107,7 +107,11 @@ const budgetsSchema = new mongoose.Schema({
   },
   placement_price: {
     type: Number,
-    required: String,
+    required: false,
+  },
+  placement_days: {
+    type: String,
+    required: false,
   },
   shipment: {
     type: Boolean,

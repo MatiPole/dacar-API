@@ -37,8 +37,8 @@ route.post("/", async (req, res) => {
   }
 });
 
-//Eliminar un evento
-route.delete("/:id", verifyToken, (req, res) => {
+//Eliminar un cliente
+route.delete("/:id", (req, res) => {
   let result = deleteClient(req.params.id);
   result
     .then((value) => {
@@ -75,20 +75,15 @@ route.get("/:clientId", (req, res) => {
     });
 });
 
-route.patch(
-  "/update-client/:id",
-  /* verifyToken, */ (req, res) => {
-    let result = updateClient(req.body, req.params.id);
-    result
-      .then((value) => {
-        res.json({
-          value,
-        });
-      })
-      .catch((err) => {
-        res.status(400).json({ err });
-      });
+route.put("/edit-client/:clientId", async (req, res) => {
+  try {
+    const updateFields = req.body;
+    let result = await updateClient(req.params.clientId, updateFields);
+
+    res.json(result);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
-);
+});
 
 export default route;
