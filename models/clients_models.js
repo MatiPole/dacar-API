@@ -11,19 +11,19 @@ const clientsSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    required: true,
+    required: false,
   },
   address: {
     type: String,
-    required: true,
+    required: false,
   },
   dni: {
     type: String,
-    required: true,
+    required: false,
   },
   cuil_cuit: {
     type: String,
-    required: true,
+    required: false,
   },
   email: {
     type: String,
@@ -42,4 +42,5 @@ const clientsSchema = new mongoose.Schema({
     default: true,
   },
 });
+
 export default mongoose.model("Clients", clientsSchema);
