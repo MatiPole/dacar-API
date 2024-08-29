@@ -12,6 +12,7 @@ async function createPiece(req) {
     name: req.body.name,
     length: req.body.length,
     width: req.body.width,
+    qty: req.body.qty,
     category: req.body.category,
     material: req.body.material,
     orientation: req.body.orientation,

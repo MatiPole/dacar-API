@@ -13,6 +13,10 @@ const piecesSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  qty: {
+    type: Number,
+    required: true,
+  },
   category: {
     type: String,
     required: true,
