@@ -8,12 +8,13 @@ async function piecesList() {
 }
 
 async function createPiece(req) {
+  console.log(req.body);
   let piece = new Pieces({
     name: req.body.name,
     length: req.body.length,
     width: req.body.width,
     qty: req.body.qty,
-    category: req.body.category,
+    comment: req.body.comment,
     material: req.body.material,
     orientation: req.body.orientation,
     edgeLength: req.body.edgeLength,
@@ -25,8 +26,15 @@ async function createPiece(req) {
     lacqueredPieceSides: req.body.lacqueredPieceSides,
     veneer: req.body.veneer,
     veneerFinishing: req.body.veneerFinishing,
+    veneerLacqueredPieceSides: req.body.veneerLacqueredPieceSides,
+    veneerLacqueredOpen: req.body.veneerLacqueredOpen,
+    veneer2: req.body.veneer2,
+    veneer2Finishing: req.body.veneer2Finishing,
+    veneer2LacqueredPieceSides: req.body.veneer2LacqueredPieceSides,
+    veneer2LacqueredOpen: req.body.veneer2LacqueredOpen,
     melamine: req.body.melamine,
     melamineLacquered: req.body.melamineLacquered,
+    melamineLacqueredPieceSides: req.body.melamineLacqueredPieceSides,
     pantographed: req.body.pantographed,
     loose_piece: req.body.loose_piece,
     module_id: req.body.moduleId,

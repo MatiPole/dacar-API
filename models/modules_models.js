@@ -19,7 +19,7 @@ const modulesSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  category: {
+  material: {
     type: String,
     required: true,
   },

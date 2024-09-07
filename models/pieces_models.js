@@ -17,9 +17,9 @@ const piecesSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  category: {
+  comment: {
     type: String,
-    required: true,
+    required: false,
   },
   material: {
     type: String,
@@ -70,6 +70,33 @@ const piecesSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  veneerLacqueredPieceSides: {
+    type: String,
+    required: false,
+  },
+  veneerLacqueredOpen: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  veneer2: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  veneer2Finishing: {
+    type: String,
+    required: false,
+  },
+  veneer2LacqueredPieceSides: {
+    type: String,
+    required: false,
+  },
+  veneer2LacqueredOpen: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
   melamine: {
     type: Boolean,
     required: false,
@@ -79,6 +106,10 @@ const piecesSchema = new mongoose.Schema({
     type: Boolean,
     required: false,
     default: false,
+  },
+  melamineLacqueredPieceSides: {
+    type: String,
+    required: false,
   },
   pantographed: {
     type: Boolean,

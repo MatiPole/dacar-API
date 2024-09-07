@@ -14,7 +14,7 @@ async function createModule(req) {
     length: req.body.length,
     width: req.body.width,
     height: req.body.height,
-    category: req.body.category,
+    material: req.body.material,
     pieces_number: req.body.pieces_number,
     supplies_module: req.body.supplies_module,
   });

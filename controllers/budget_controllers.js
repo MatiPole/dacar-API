@@ -2,8 +2,16 @@ import Budgets from "../models/budgets_models.js";
 
 //Se buscan todos los presupuestos.
 async function budgetsList() {
-  let budget = await Budgets.find();
-  return budget;
+  try {
+    // Buscar presupuestos con status true y ordenar por budget_number descendente
+    const budgets = await Budgets.find({ status: true }).sort({
+      budget_number: -1,
+    });
+    return budgets;
+  } catch (err) {
+    console.error("Error al obtener la lista de presupuestos:", err);
+    throw new Error("Error al obtener la lista de presupuestos");
+  }
 }
 
 async function createBudget(req) {
@@ -62,15 +70,23 @@ async function updateBudget(supplieId, updateFields) {
   }
 }
 
-async function deleteBudget(id) {
+async function deleteBudget(budgetId) {
   try {
-    const budget = await Budgets.findById(id);
+    // Buscar el presupuesto por ID
+    const budget = await Budgets.findById(budgetId);
+
     if (budget) {
-      await Budgets.deleteOne({ _id: id });
+      // Actualizar el campo status a "deleted" en lugar de eliminar
+      await Budgets.updateOne(
+        { _id: budgetId },
+        { $set: { status: "deleted" } }
+      );
     }
+
     return budget;
   } catch (err) {
-    res.status(400).send(err + "Error al eliminar el presupuesto");
+    // Enviar error con el mensaje adecuado
+    res.status(400).send(err + "Error al cambiar el estado del presupuesto");
   }
 }
 

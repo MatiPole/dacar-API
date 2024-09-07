@@ -72,10 +72,10 @@ route.get("/find-by-client-name/:name", async (req, res) => {
 });
 
 //Eliminar un presupuesto
-route.delete(
-  "/:id",
+route.patch(
+  "/delete-budget/:budgetId",
   /* verifyToken, */ (req, res) => {
-    let result = deleteBudget(req.params.id);
+    let result = deleteBudget(req.params.budgetId);
     result
       .then((value) => {
         res.json({
