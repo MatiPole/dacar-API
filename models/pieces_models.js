@@ -52,6 +52,11 @@ const piecesSchema = new mongoose.Schema({
     required: false,
     default: false,
   },
+  polishedEdge: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
   lacqueredPiece: {
     type: Boolean,
     required: false,

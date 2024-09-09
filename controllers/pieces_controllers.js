@@ -8,7 +8,6 @@ async function piecesList() {
 }
 
 async function createPiece(req) {
-  console.log(req.body);
   let piece = new Pieces({
     name: req.body.name,
     length: req.body.length,
@@ -22,6 +21,7 @@ async function createPiece(req) {
     edgeWidth: req.body.edgeWidth,
     edgeWidthSides: req.body.edgeWidthSides,
     lacqueredEdge: req.body.lacqueredEdge,
+    polishedEdge: req.body.polishedEdge,
     lacqueredPiece: req.body.lacqueredPiece,
     lacqueredPieceSides: req.body.lacqueredPieceSides,
     veneer: req.body.veneer,

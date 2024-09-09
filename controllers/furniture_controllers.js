@@ -151,14 +151,26 @@ const getLoosePiecesByFurnitureId = async (furnitureId) => {
       throw new Error("Mueble no encontrado");
     }
 
-    // Filtra las piezas sueltas en todos los módulos
-    const loosePieces = furniture.modules_furniture.flatMap((module) =>
-      module.pieces.filter((piece) => piece.loose_piece)
-    );
+    // Mapea los módulos con sus detalles y piezas sueltas si existen
+    const modulesWithLoosePieces = furniture.modules_furniture.map((module) => {
+      // Filtra las piezas sueltas en el módulo
+      const loosePieces = module.pieces.filter((piece) => piece.loose_piece);
 
-    return loosePieces;
+      // Retorna un objeto con los detalles del módulo y las piezas sueltas
+      return {
+        moduleName: module.name,
+        moduleLength: module.length,
+        moduleWidth: module.width,
+        moduleHeight: module.height,
+        loosePieces, // Incluye las piezas sueltas asociadas al módulo
+      };
+    });
+
+    return modulesWithLoosePieces;
   } catch (error) {
-    throw new Error("Error al obtener las piezas sueltas: " + error.message);
+    throw new Error(
+      "Error al obtener los módulos y piezas sueltas: " + error.message
+    );
   }
 };
 
