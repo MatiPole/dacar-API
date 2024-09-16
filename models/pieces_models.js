@@ -113,7 +113,7 @@ const piecesSchema = new mongoose.Schema({
     default: false,
   },
   melamineLacqueredPieceSides: {
-    type: String,
+    type: Number,
     required: false,
   },
   pantographed: {

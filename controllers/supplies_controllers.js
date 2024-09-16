@@ -24,10 +24,12 @@ async function suppliesVeneerList() {
   return supplie;
 }
 
-//Se buscan todos insumos menos las placas.
+//Se buscan todos insumos menos las placas, ni filos, ni chapa.
 const suppliesExceptTablesList = async () => {
   try {
-    return await Supplies.find({ category: { $nin: ["Placa", "Filo"] } });
+    return await Supplies.find({
+      category: { $nin: ["Placa", "Filo", "Chapa"] },
+    });
   } catch (error) {
     console.error("Error fetching supplies:", error);
     throw error;
