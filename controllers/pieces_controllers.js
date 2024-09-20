@@ -27,11 +27,11 @@ async function createPiece(req) {
     veneer: req.body.veneer,
     veneerFinishing: req.body.veneerFinishing,
     veneerLacqueredPieceSides: req.body.veneerLacqueredPieceSides,
-    veneerLacqueredOpen: req.body.veneerLacqueredOpen,
+
     veneer2: req.body.veneer2,
     veneer2Finishing: req.body.veneer2Finishing,
     veneer2LacqueredPieceSides: req.body.veneer2LacqueredPieceSides,
-    veneer2LacqueredOpen: req.body.veneer2LacqueredOpen,
+
     melamine: req.body.melamine,
     melamineLacquered: req.body.melamineLacquered,
     melamineLacqueredPieceSides: req.body.melamineLacqueredPieceSides,
