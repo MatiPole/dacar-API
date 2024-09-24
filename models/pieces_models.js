@@ -35,7 +35,7 @@ const piecesSchema = new mongoose.Schema({
     default: false,
   },
   edgeLengthSides: {
-    type: String,
+    type: Number,
     required: false,
   },
   edgeWidth: {
@@ -44,7 +44,7 @@ const piecesSchema = new mongoose.Schema({
     default: false,
   },
   edgeWidthSides: {
-    type: String,
+    type: Number,
     required: false,
   },
   lacqueredEdge: {
@@ -63,7 +63,7 @@ const piecesSchema = new mongoose.Schema({
     default: false,
   },
   lacqueredPieceSides: {
-    type: String,
+    type: Number,
     required: false,
   },
   veneer: {
@@ -76,7 +76,7 @@ const piecesSchema = new mongoose.Schema({
     required: false,
   },
   veneerLacqueredPieceSides: {
-    type: String,
+    type: Number,
     required: false,
   },
   veneer2: {
@@ -89,7 +89,7 @@ const piecesSchema = new mongoose.Schema({
     required: false,
   },
   veneer2LacqueredPieceSides: {
-    type: String,
+    type: Number,
     required: false,
   },
   melamine: {

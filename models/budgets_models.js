@@ -53,6 +53,10 @@ const budgetsSchema = new mongoose.Schema({
     type: [Object],
     required: false,
   },
+  edge_polished: {
+    type: [Object],
+    required: false,
+  },
   edge_no_lacquered: {
     type: [Object],
     required: false,
