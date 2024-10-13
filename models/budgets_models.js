@@ -41,6 +41,10 @@ const budgetsSchema = new mongoose.Schema({
     type: [Object],
     required: false,
   },
+  lacqueredOpen: {
+    type: [Object],
+    required: false,
+  },
   lacquered: {
     type: [Object],
     required: false,

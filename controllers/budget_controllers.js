@@ -26,6 +26,7 @@ async function createBudget(req) {
     veneer: req.body.veneer,
     veneerPolished: req.body.veneerPolished,
     chapa: req.body.chapa,
+    lacqueredOpen: req.body.lacqueredOpen,
     lacquered: req.body.lacquered,
     pantographed: req.body.pantographed,
     edge_lacquered: req.body.edge_lacquered,
