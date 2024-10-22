@@ -88,4 +88,17 @@ route.patch(
   }
 );
 
+route.put("/edit-budget/:budgetId", async (req, res) => {
+  try {
+    const budgetId = req.params.budgetId;
+    const updateFields = req.body;
+
+    let result = await updateBudget(budgetId, updateFields);
+
+    res.json(result);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 export default route;

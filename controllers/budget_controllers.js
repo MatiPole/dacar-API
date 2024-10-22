@@ -54,21 +54,23 @@ async function createBudget(req) {
   return await budget.save();
 }
 
-async function updateBudget(supplieId, updateFields) {
+async function updateBudget(budgetId, updateFields) {
   try {
-    // console.log(pieceId);
-    // Actualizar la pieza con el ID dado y los campos de actualización
-    const result = await Budgets.updateOne(
-      { _id: supplieId },
-      { $set: updateFields }
+    // Busca y actualiza el presupuesto por su ID, usando los campos proporcionados
+    const updatedBudget = await Budgets.findByIdAndUpdate(
+      budgetId,
+      { $set: updateFields }, // Actualiza solo los campos proporcionados
+      { new: true, runValidators: true } // Retorna el documento actualizado y valida los campos
     );
-    // Verificar si se encontró y actualizó el presupuesto
-    if (result.nModified === 0) {
-      throw new Error("No se encontró el presupuesto para actualizar");
+
+    if (!updatedBudget) {
+      throw new Error("Presupuesto no encontrado");
     }
-    return result;
+
+    return updatedBudget;
   } catch (error) {
-    throw error;
+    console.error("Error actualizando presupuesto API:", error);
+    throw new Error("Error actualizando presupuesto", error);
   }
 }
 
