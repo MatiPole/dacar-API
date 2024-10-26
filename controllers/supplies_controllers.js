@@ -1,9 +1,24 @@
 import Supplies from "../models/supplies_models.js";
 
 //Se buscan todas los insumos.
-async function suppliesList() {
-  let supplie = await Supplies.find();
-  return supplie;
+async function suppliesList(page = 1, limit = 10, searchTerm = "") {
+  const skip = (page - 1) * limit; // Calcula los documentos a omitir
+
+  // Preparamos la consulta de búsqueda
+  const query = searchTerm
+    ? { name: { $regex: searchTerm, $options: "i" } }
+    : {}; // Suponiendo que el campo a buscar se llama 'name'
+
+  const supplies = await Supplies.find(query).skip(skip).limit(limit).lean(); // .lean() para mejorar el rendimiento
+
+  const totalSupplies = await Supplies.countDocuments(query); // Total de insumos que coinciden con la búsqueda
+
+  return {
+    data: supplies,
+    currentPage: page,
+    totalPages: Math.ceil(totalSupplies / limit),
+    totalSupplies, // También puedes incluir el total de insumos si es necesario
+  };
 }
 
 //Se buscan todas las placas.
