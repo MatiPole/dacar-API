@@ -1,17 +1,39 @@
 import Budgets from "../models/budgets_models.js";
 
 //Se buscan todos los presupuestos.
-async function budgetsList() {
-  try {
-    // Buscar presupuestos con status true y ordenar por budget_number descendente
-    const budgets = await Budgets.find({ status: true }).sort({
-      budget_number: -1,
-    });
-    return budgets;
-  } catch (err) {
-    console.error("Error al obtener la lista de presupuestos:", err);
-    throw new Error("Error al obtener la lista de presupuestos");
-  }
+async function budgetsList(page = 1, limit = 10, searchTerm = "") {
+  const skip = (page - 1) * limit; // Calcula los documentos a omitir
+
+  // Preparamos la consulta de búsqueda
+  const query = {
+    status: true, // Solo documentos con status en true
+    ...(searchTerm
+      ? {
+          client: {
+            $elemMatch: {
+              $or: [
+                { name: { $regex: searchTerm, $options: "i" } },
+                { lastname: { $regex: searchTerm, $options: "i" } },
+              ],
+            },
+          },
+        }
+      : {}),
+  };
+  const budgets = await Budgets.find(query)
+    .sort({ budget_number: -1 })
+    .skip(skip)
+    .limit(limit)
+    .lean(); // .lean() para mejorar el rendimiento
+
+  const totalBudgets = await Budgets.countDocuments(query); // Total de servicios que coinciden con la búsqueda
+
+  return {
+    data: budgets,
+    currentPage: page,
+    totalPages: Math.ceil(totalBudgets / limit),
+    totalBudgets,
+  };
 }
 
 async function createBudget(req) {

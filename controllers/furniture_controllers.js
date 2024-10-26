@@ -1,11 +1,36 @@
 import Furnitures from "../models/furnitures_models.js";
 
 // Se traen todos los muebles
-async function furnitureList() {
+async function furnitureAll() {
   let Furniture = await Furnitures.find()
     .populate("modules_furniture", "name")
     .sort({ name: 1 });
   return Furniture;
+}
+
+async function furnitureList(page = 1, limit = 10, searchTerm = "") {
+  const skip = (page - 1) * limit; // Calcula los documentos a omitir
+
+  // Preparamos la consulta de búsqueda
+  const query = searchTerm
+    ? { name: { $regex: searchTerm, $options: "i" } }
+    : {}; // Suponiendo que el campo a buscar se llama 'name'
+
+  const furnitures = await Furnitures.find(query)
+    .populate("modules_furniture", "name")
+    .sort({ name: 1 })
+    .skip(skip)
+    .limit(limit)
+    .lean(); // .lean() para mejorar el rendimiento
+
+  const totalFurnitures = await Furnitures.countDocuments(query); // Total de servicios que coinciden con la búsqueda
+
+  return {
+    data: furnitures,
+    currentPage: page,
+    totalPages: Math.ceil(totalFurnitures / limit),
+    totalFurnitures,
+  };
 }
 
 async function createFurniture(req, res) {
@@ -200,6 +225,7 @@ async function getAllPiecesByFurnitureId(furnitureId) {
 }
 
 export {
+  furnitureAll,
   furnitureList,
   createFurniture,
   updateFurniture,

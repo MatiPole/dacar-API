@@ -2,9 +2,33 @@ import Modules from "../models/modules_models.js";
 import Pieces from "../models/pieces_models.js";
 
 //Se traen todos los modulos
-async function moduleList() {
+async function moduleAll() {
   let Module = await Modules.find().sort({ name: 1 });
   return Module;
+}
+
+async function moduleList(page = 1, limit = 10, searchTerm = "") {
+  const skip = (page - 1) * limit; // Calcula los documentos a omitir
+
+  // Preparamos la consulta de búsqueda
+  const query = searchTerm
+    ? { name: { $regex: searchTerm, $options: "i" } }
+    : {}; // Suponiendo que el campo a buscar se llama 'name'
+
+  const modules = await Modules.find(query)
+    .sort({ name: 1 })
+    .skip(skip)
+    .limit(limit)
+    .lean(); // .lean() para mejorar el rendimiento
+
+  const totalModules = await Modules.countDocuments(query); // Total de servicios que coinciden con la búsqueda
+
+  return {
+    data: modules,
+    currentPage: page,
+    totalPages: Math.ceil(totalModules / limit),
+    totalModules,
+  };
 }
 
 async function createModule(req) {
@@ -134,6 +158,7 @@ async function findById(id) {
 }
 
 export {
+  moduleAll,
   moduleList,
   createModule,
   cloneModule,

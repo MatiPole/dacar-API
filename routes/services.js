@@ -4,12 +4,11 @@ import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
 import path from "path";
 import {
+  sirvicesAll,
   sirvicesList,
   createService,
   updateService,
   deleteService,
-  suppliesTablesList,
-  suppliesExceptTablesList,
   findByName,
   serviceById,
 } from "../controllers/services_controllers.js";
@@ -17,9 +16,9 @@ import {
 const route = express.Router();
 
 //En todas las rutas aplicamos autenticación por medio de nuestro middleware verifyToken
-//Búsqueda eventos para adminsitrador
+//Búsqueda todos los servicios
 route.get("/", (req, res) => {
-  let result = sirvicesList();
+  let result = sirvicesAll();
   result
     .then((service) => {
       res.json(service);
@@ -29,25 +28,20 @@ route.get("/", (req, res) => {
     });
 });
 
-route.get("/tables", (req, res) => {
-  let result = suppliesTablesList();
-  result
-    .then((supplie) => {
-      res.json(supplie);
-    })
-    .catch((err) => {
-      res.status(400).json({ err });
-    });
-});
+route.get("/list", (req, res) => {
+  const page = Math.max(1, parseInt(req.query.page)) || 1; // Aseguramos que sea al menos 1
+  const limit = Math.min(Math.max(1, parseInt(req.query.limit)) || 10, 100); // Máximo 100 por ejemplo
+  const searchTerm = req.query.search || ""; // Captura el término de búsqueda
 
-route.get("/supplies-not-tables", (req, res) => {
-  let result = suppliesExceptTablesList();
-  result
-    .then((supplie) => {
-      res.json(supplie);
+  sirvicesList(page, limit, searchTerm)
+    .then((result) => {
+      res.json(result);
     })
     .catch((err) => {
-      res.status(400).json({ err });
+      console.error(err); // Log del error en el servidor
+      res
+        .status(500)
+        .json({ error: "Ocurrió un error al obtener los servicios." });
     });
 });
 

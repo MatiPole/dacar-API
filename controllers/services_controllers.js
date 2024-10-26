@@ -1,26 +1,35 @@
 import Services from "../models/services_models.js";
 
-//Se buscan todas los insumos.
-async function sirvicesList() {
+//Se buscan todos los servicio.
+async function sirvicesAll() {
   let service = await Services.find();
   return service;
 }
 
-//Se buscan todas las placas.
-async function suppliesTablesList() {
-  let service = await Services.find({ category: "PLACA" });
-  return service;
-}
+//Se buscan todos los servicio.
+async function sirvicesList(page = 1, limit = 10, searchTerm = "") {
+  const skip = (page - 1) * limit; // Calcula los documentos a omitir
 
-//Se buscan todos insumos menos las placas.
-const suppliesExceptTablesList = async () => {
-  try {
-    return await Services.find({ category: { $ne: "PLACA" } });
-  } catch (error) {
-    console.error("Error fetching supplies:", error);
-    throw error;
-  }
-};
+  // Preparamos la consulta de búsqueda
+  const query = searchTerm
+    ? { name: { $regex: searchTerm, $options: "i" } }
+    : {}; // Suponiendo que el campo a buscar se llama 'name'
+
+  const services = await Services.find(query)
+    .sort({ name: 1 })
+    .skip(skip)
+    .limit(limit)
+    .lean(); // .lean() para mejorar el rendimiento
+
+  const totalServices = await Services.countDocuments(query); // Total de servicios que coinciden con la búsqueda
+
+  return {
+    data: services,
+    currentPage: page,
+    totalPages: Math.ceil(totalServices / limit),
+    totalServices,
+  };
+}
 
 async function createService(req) {
   let service = new Services({
@@ -52,21 +61,21 @@ async function updateService(serviceId, updateFields) {
 
 async function deleteService(id) {
   try {
-    const supplie = await Services.findById(id);
-    if (supplie) {
+    const service = await Services.findById(id);
+    if (service) {
       await Services.deleteOne({ _id: id });
     }
-    return supplie;
+    return service;
   } catch (err) {
     res.status(400).send(err + "Error al eliminar el servicio");
   }
 }
 
 async function findByName(name) {
-  let supplie = await Services.find({
+  let service = await Services.find({
     name: { $regex: new RegExp(name, "i") },
   });
-  return supplie;
+  return service;
 }
 
 async function serviceById(serviceId) {
@@ -79,12 +88,11 @@ async function serviceById(serviceId) {
 }
 
 export {
+  sirvicesAll,
   sirvicesList,
   createService,
   updateService,
   deleteService,
-  suppliesTablesList,
-  suppliesExceptTablesList,
   findByName,
   serviceById,
 };

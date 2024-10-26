@@ -1,9 +1,7 @@
 import express from "express";
 import verifyToken from "../middlewares/auth.js";
-import { v2 as cloudinary } from "cloudinary";
-import multer from "multer";
-import path from "path";
 import {
+  clientsAll,
   clientsList,
   createClient,
   updateClient,
@@ -15,15 +13,32 @@ import {
 const route = express.Router();
 
 //En todas las rutas aplicamos autenticación por medio de nuestro middleware verifyToken
-//Búsqueda eventos para adminsitrador
+//Búsqueda todos los clientes
 route.get("/", (req, res) => {
-  let result = clientsList();
+  let result = clientsAll();
   result
     .then((client) => {
       res.json(client);
     })
     .catch((err) => {
       res.status(400).json({ err });
+    });
+});
+
+route.get("/list", (req, res) => {
+  const page = Math.max(1, parseInt(req.query.page)) || 1; // Aseguramos que sea al menos 1
+  const limit = Math.min(Math.max(1, parseInt(req.query.limit)) || 10, 100); // Máximo 100 por ejemplo
+  const searchTerm = req.query.search || ""; // Captura el término de búsqueda
+
+  clientsList(page, limit, searchTerm)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => {
+      console.error(err); // Log del error en el servidor
+      res
+        .status(500)
+        .json({ error: "Ocurrió un error al obtener los clientes." });
     });
 });
 

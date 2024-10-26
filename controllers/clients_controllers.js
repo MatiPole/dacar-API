@@ -1,9 +1,38 @@
 import Clients from "../models/clients_models.js";
 
 //Se buscan todas las tablas.
-async function clientsList() {
+async function clientsAll() {
   let client = await Clients.find();
   return client;
+}
+
+async function clientsList(page = 1, limit = 10, searchTerm = "") {
+  const skip = (page - 1) * limit; // Calcula los documentos a omitir
+
+  // Preparamos la consulta de búsqueda
+  const query = searchTerm
+    ? {
+        $or: [
+          { name: { $regex: searchTerm, $options: "i" } },
+          { lastname: { $regex: searchTerm, $options: "i" } },
+        ],
+      }
+    : {};
+
+  const clients = await Clients.find(query)
+    .sort({ name: 1 })
+    .skip(skip)
+    .limit(limit)
+    .lean(); // .lean() para mejorar el rendimiento
+
+  const totalClients = await Clients.countDocuments(query); // Total de clientes que coinciden con la búsqueda
+
+  return {
+    data: clients,
+    currentPage: page,
+    totalPages: Math.ceil(totalClients / limit),
+    totalClients,
+  };
 }
 
 async function createClient(req) {
@@ -71,6 +100,7 @@ async function clientById(id) {
 }
 
 export {
+  clientsAll,
   clientsList,
   createClient,
   updateClient,
