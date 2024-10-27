@@ -7,19 +7,19 @@ const furnituresSchema = new mongoose.Schema({
   },
   length: {
     type: String,
-    required: true,
+    required: false,
   },
   width: {
     type: String,
-    required: true,
+    required: false,
   },
   height: {
     type: String,
-    required: true,
+    required: false,
   },
   category: {
     type: String,
-    required: true,
+    required: false,
   },
   modules_furniture: {
     type: [Object],

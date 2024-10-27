@@ -10,20 +10,20 @@ const budgetsSchema = new mongoose.Schema({
     required: true,
   },
   length: {
-    type: Number,
-    required: true,
+    type: String,
+    required: false,
   },
   width: {
     type: String,
-    required: true,
+    required: false,
   },
   height: {
     type: String,
-    required: true,
+    required: false,
   },
   category: {
     type: String,
-    required: true,
+    required: false,
   },
   furniture: {
     type: [Object],
