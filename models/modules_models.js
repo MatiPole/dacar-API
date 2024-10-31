@@ -23,6 +23,10 @@ const modulesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   pieces_number: {
     type: Number,
     required: true,

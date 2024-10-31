@@ -39,6 +39,7 @@ async function createModule(req) {
     width: req.body.width,
     height: req.body.height,
     material: req.body.material,
+    description: req.body.description,
     pieces_number: req.body.pieces_number,
     supplies_module: req.body.supplies_module,
   });
