@@ -18,7 +18,7 @@ async function furnitureList(page = 1, limit = 10, searchTerm = "") {
 
   const furnitures = await Furnitures.find(query)
     .populate("modules_furniture", "name")
-    .sort({ name: 1 })
+    .sort({ createdAt: -1 })
     .skip(skip)
     .limit(limit)
     .lean(); // .lean() para mejorar el rendimiento
