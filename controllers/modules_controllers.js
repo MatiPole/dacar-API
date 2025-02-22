@@ -8,20 +8,25 @@ async function moduleAll() {
 }
 
 async function moduleList(page = 1, limit = 10, searchTerm = "") {
-  const skip = (page - 1) * limit; // Calcula los documentos a omitir
+  const skip = (page - 1) * limit;
 
-  // Preparamos la consulta de búsqueda
+  // Preparamos la consulta de búsqueda en 'name' y 'description'
   const query = searchTerm
-    ? { name: { $regex: searchTerm, $options: "i" } }
-    : {}; // Suponiendo que el campo a buscar se llama 'name'
+    ? {
+        $or: [
+          { name: { $regex: searchTerm, $options: "i" } },
+          { description: { $regex: searchTerm, $options: "i" } },
+        ],
+      }
+    : {};
 
   const modules = await Modules.find(query)
     .sort({ name: 1 })
     .skip(skip)
     .limit(limit)
-    .lean(); // .lean() para mejorar el rendimiento
+    .lean();
 
-  const totalModules = await Modules.countDocuments(query); // Total de servicios que coinciden con la búsqueda
+  const totalModules = await Modules.countDocuments(query);
 
   return {
     data: modules,
